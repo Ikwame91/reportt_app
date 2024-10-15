@@ -31,6 +31,8 @@ class MyTextfield extends StatelessWidget {
             width: 2,
           ),
         ),
+        fillColor: Colors.white,
+        filled: true,
       ),
     );
   }

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:report_app/widgets/custom_button.dart';
 import 'package:report_app/widgets/textfield.dart';
 
@@ -82,9 +83,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-                Icon(Icons.face),
+                Icon(Ionicons.finger_print_outline, size: 35),
                 const SizedBox(height: 20),
-                CustomButton(text: "Login", onPressed: () {})
+                CustomButton(
+                    text: "Login",
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/home');
+                    })
               ],
             ),
           ),

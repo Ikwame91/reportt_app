@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:report_app/screens/home_screen.dart';
 import 'package:report_app/screens/login_screen.dart';
 
 void main() {
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
          '/login': (context) => const LoginScreen(),
-        '/home': (context) => const Homescreen(),
+        '/home': (context) => const HomeScreen(),
       },
       home: const LoginScreen(),
     );
