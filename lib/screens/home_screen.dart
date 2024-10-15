@@ -25,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
           backgroundColor: Colors.white,
           body: Container(
             decoration: const BoxDecoration(
@@ -57,24 +58,29 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const Row(
+                   Row(
                     children: [
-                      Expanded(
+                      const Expanded(
                         child: ReportCard(
                           title: "Favorite report",
                           count: "12",
                           color: Color(0xFFE17751),
                         ),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Expanded(
-                        child: ReportCard(
-                          title: "All reports",
-                          count: "120",
-                          color: Color(0xFF157ACC),
+                        child: GestureDetector(
+                          onTap: () {
+                           Navigator.pushNamed(context, '/filter');
+                          },
+                          child: const ReportCard(
+                            title: "All reports",
+                            count: "120",
+                            color: Color(0xFF157ACC),
+                          ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 60,
                       )
                     ],
