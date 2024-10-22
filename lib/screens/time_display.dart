@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:report_app/components/inro_widget.dart';
+import 'package:report_app/screens/home_screen.dart';
 
 class TimeDisplayScreen extends StatefulWidget {
   const TimeDisplayScreen({super.key});
@@ -68,9 +69,10 @@ class _TimeDisplayScreenState extends State<TimeDisplayScreen> {
                   ),
                 ),
               ),
-              
+
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -100,13 +102,30 @@ class _TimeDisplayScreenState extends State<TimeDisplayScreen> {
                       ),
                     ),
                     const Spacer(),
-                    FadeInUp(
-                      duration: const Duration(milliseconds: 800),
-                      child: IntroWidget(
-                        onTap: () {
-                          Navigator.of(context).pushReplacementNamed('/home');
-                        },
-                      ),
+                    IntroWidget(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    const HomeScreen(),
+                            transitionDuration: const Duration(milliseconds: 500),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              var begin = 0.01;
+                              var end = 1.0;
+                              var curve = Curves.ease;
+
+                              var tween = Tween(begin: begin, end: end)
+                                  .chain(CurveTween(curve: curve));
+                              return ScaleTransition(
+                                scale: animation.drive(tween),
+                                child: child,
+                              );
+                            },
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
