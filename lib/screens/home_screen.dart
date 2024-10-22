@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:report_app/components/report_tile.dart';
 import 'package:report_app/widgets/greetings.dart';
 import 'package:report_app/widgets/report_card.dart';
 
@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: false,
           backgroundColor: Colors.white,
           body: Container(
             decoration: const BoxDecoration(
@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                   Row(
+                  Row(
                     children: [
                       const Expanded(
                         child: ReportCard(
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
-                           Navigator.pushNamed(context, '/filter');
+                            Navigator.pushNamed(context, '/filter');
                           },
                           child: const ReportCard(
                             title: "All reports",
@@ -146,14 +146,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 20),
                   Expanded(
                     child: ListView(
-                      children: [
-                        _buildReportTile("Profit Position", "Head Office"),
-                        _buildReportTile(
-                            "Branch Spacy Movement", "Eastern Branch"),
-                        _buildReportTile("Profit Position", "Southern Branch"),
-                        _buildReportTile(
-                            "Foreign Currency Allocation", "Consolidated"),
-                        _buildReportTile("Profit Position", "Western Branch"),
+                      children: const [
+                        ReportTile(
+                            title: "Profit Position", subtitle: "Head Office"),
+                        ReportTile(
+                            title: "Branch Specy Movement",
+                            subtitle: "Eastern Branch"),
+                        ReportTile(
+                            title: "Profit Position",
+                            subtitle: "Southern Branch"),
+                        ReportTile(
+                            title: "Profit Position",
+                            subtitle: "Northern Branch"),
+                        ReportTile(
+                            title: "Foreign Currency Allocation",
+                            subtitle: "Consolidated"),
+                        
                       ],
                     ),
                   ),
@@ -164,7 +172,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  
   Widget _buildTab(String label, bool isSelected) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
@@ -186,53 +193,4 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildReportTile(String title, String subtitle) {
-    return Container(
-      padding: const EdgeInsets.all(15),
-      margin: const EdgeInsets.only(bottom: 10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.blue[300]!),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.blue[100],
-                  borderRadius: BorderRadius.circular(18),
-                ),
-                child: const Icon(Icons.article_outlined, color: Colors.blue),
-              ),
-              const SizedBox(width: 12),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: GoogleFonts.montserrat(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Text(
-                    subtitle,
-                    style: GoogleFonts.poppins(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const Icon(Icons.download, color: Colors.blue),
-        ],
-      ),
-    );
-  }
 }

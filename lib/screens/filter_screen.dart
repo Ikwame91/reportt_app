@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:report_app/components/date_tab.dart';
+import 'package:report_app/components/report_tile.dart';
 
 class FilterScreen extends StatefulWidget {
   const FilterScreen({super.key});
@@ -8,146 +11,115 @@ class FilterScreen extends StatefulWidget {
 }
 
 class _FilterScreenState extends State<FilterScreen> {
-    int selectedTabIndex = 0;
-  final List<String> tabs =[
-    "Mon",
-    "Tue",
-    "Wed",
-    "Thu",
-    "Fri",
+  int selectedDay = 5; 
+  String selectedMonth = "August"; 
+  int selectedYear = 2024;
 
+
+  List<Map<String, dynamic>> days = [
+    {"day": 5, "label": "Mon"},
+    {"day": 6, "label": "Tue"},
+    {"day": 7, "label": "Wed"},
+    {"day": 8, "label": "Thu"},
+    {"day": 9, "label": "Fri"}
   ];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-          body: Container(
+        child: Scaffold(
+      body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
               image: AssetImage("assets/images/background.png"),
               fit: BoxFit.cover),
         ),
-        child: Column(
-          children: [
-            SizedBox(height: 20),
-           SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: List.generate(tabs.length, (index) {
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              selectedTabIndex = index;
-                            });
-                          },
-                          child:
-                              _buildTab(tabs[index], index == selectedTabIndex),
-                        );
-                      }),
-                    ),
-                  ),
-            SizedBox(height: 20),
-            _buildFilterSection(),
-            Expanded(
-              child: ListView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _buildCard("Profit Position", "Head Office"),
-                  _buildCard("Branch Specy Movement", "Eastern Branch"),
-                  _buildCard("Profit Position", "Southern Branch"),
-                  _buildCard("Foreign Currency Allocation", "Consolidated"),
-                  _buildCard("Profit Position", "Western Branch"),
-                  _buildCard("Profit Position", "Western Branch"),
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.black),
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.search, color: Colors.blue),
+                    onPressed: () {},
+                  ),
                 ],
               ),
-            ),
-          ],
-        ),
-      )),
-    );
-  }
-
-  Widget _buildDateSelection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _buildDateCard("5 Mon"),
-          _buildDateCard("6 Tue"),
-          _buildDateCard("7 Wed"),
-          _buildDateCard("8 Thu"),
-          _buildDateCard("9 Fri"),
-        ],
-      ),
-    );
-  }
- Widget _buildTab(String label, bool isSelected) {
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        decoration: BoxDecoration(
-          color: isSelected ? Colors.blue : Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.blue, width: 2),
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: isSelected ? Colors.white : Colors.blue,
-            fontWeight: FontWeight.bold,
+              const SizedBox(height: 16),
+              Text(
+                '$selectedMonth $selectedDay, $selectedYear',
+                style: GoogleFonts.poppins(
+                    fontSize: 26,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.blue),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: days.map((dayInfo) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedDay = dayInfo['day'];
+                      });
+                    },
+                    child: DayTab(
+                      selectedDay: selectedDay,
+                      dayInfo: dayInfo,
+                    ),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      disabledBackgroundColor: Colors.blue[800],
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                    ),
+                    child: Text(
+                      "Filter By Date",
+                      style: GoogleFonts.poppins(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  Icon(Icons.more_horiz, color: Colors.black),
+                ],
+              ),
+              Expanded(
+                child: ListView(
+                  children: const [
+                    ReportTile(
+                        title: "Profit Position", subtitle: "Head Office"),
+                    ReportTile(
+                        title: "Branch Specy Movement",
+                        subtitle: "Eastern Branch"),
+                    ReportTile(
+                        title: "Profit Position", subtitle: "Southern Branch"),
+                    ReportTile(
+                        title: "Profit Position", subtitle: "Northern Branch"),
+                    ReportTile(
+                        title: "Foreign Currency Allocation",
+                        subtitle: "Consolidated"),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
-    );
-  }
-  Widget _buildDateCard(String date) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(date, style: TextStyle(fontSize: 16)),
-      ),
-    );
-  }
-
-  Widget _buildFilterSection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            "Filter by Date",
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          Icon(Icons.more_vert),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCard(String title, String subtitle) {
-    return Card(
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: Colors.blue[50],
-          child: Icon(Icons.file_copy, color: Colors.blue),
-        ),
-        title: Text(title),
-        subtitle: Text(subtitle),
-        trailing: IconButton(
-          icon: Icon(Icons.download),
-          onPressed: () {
-            // Implement download functionality
-          },
-        ),
-      ),
-    );
+    ));
   }
 }
