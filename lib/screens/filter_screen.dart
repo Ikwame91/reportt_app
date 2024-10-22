@@ -11,10 +11,9 @@ class FilterScreen extends StatefulWidget {
 }
 
 class _FilterScreenState extends State<FilterScreen> {
-  int selectedDay = 5; 
-  String selectedMonth = "August"; 
+  int selectedDay = 5;
+  String selectedMonth = "August";
   int selectedYear = 2024;
-
 
   List<Map<String, dynamic>> days = [
     {"day": 5, "label": "Mon"},
@@ -41,9 +40,17 @@ class _FilterScreenState extends State<FilterScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.black),
-                    onPressed: () {},
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const CircleAvatar(
+                        backgroundColor: Colors.blue,
+                        radius: 25,
+                        child: Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.white,
+                        )),
                   ),
                   IconButton(
                     icon: const Icon(Icons.search, color: Colors.blue),
@@ -95,7 +102,7 @@ class _FilterScreenState extends State<FilterScreen> {
                       ),
                     ),
                   ),
-                  Icon(Icons.more_horiz, color: Colors.black),
+                  const Icon(Icons.more_horiz, color: Colors.black),
                 ],
               ),
               Expanded(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:report_app/screens/filter_screen.dart';
 import 'package:report_app/screens/home_screen.dart';
 import 'package:report_app/screens/login_screen.dart';
+import 'package:report_app/screens/time_display.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: {
+        '/timeScreen': (context) => const TimeDisplayScreen(),
          '/login': (context) => const LoginScreen(),
         '/home': (context) => const HomeScreen(),
         '/filter':(context) => const FilterScreen(),
